@@ -3,17 +3,16 @@
   margin: 0;
   padding: 0;
 }
-
+  
 @font-face {
   font-family: slkscr;
   src: url('./assets/fonts/slkscrb.ttf') format('truetype');
 }
 
-body, input {
+html {
+  background-color: #2E132C;
+  color: #ffffff;
   font-family: 'Fira Code', monospace;
-}
-
-h1 {
-    font-family: 'slkscr';
+  font-size: 62.5%;
 }
 
