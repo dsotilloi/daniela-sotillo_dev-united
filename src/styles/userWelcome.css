@@ -1,4 +1,3 @@
-.color{
-    height: 3rem;
-    width: 3rem;
+.username__color {
+    display: flex;
 }
