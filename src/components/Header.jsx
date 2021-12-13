@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles/header.css';
 
-const Header = () => {
+function Header() {
   const image = require.context('../assets/images', true);
 
     return (

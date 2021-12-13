@@ -5,9 +5,9 @@ import UserWelcome from "./UserWelcome";
 import '../styles/main.css';
 
 
-const Main = ()=> {
+function Main() {
 
-  const { user, logout } = useContext(AuthenticationContext);
+  const { user } = useContext(AuthenticationContext);
 
   return (
     <main className="Main">
@@ -18,7 +18,6 @@ const Main = ()=> {
         <SignIn />
       )}
 
-      <button onClick={logout}>Cerrar sesión</button>      
     </main>
   );
 }

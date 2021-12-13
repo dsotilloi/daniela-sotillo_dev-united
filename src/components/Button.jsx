@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import '../styles/button.css';
 
-
-const Button = ({cta, handle}) => {
+function Button({cta, handle}) {
     return (
       <button className="Button" onClick={handle}>
         {cta}
