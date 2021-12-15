@@ -1,42 +1,27 @@
 import React, { useContext } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { AuthenticationContext } from './hooks/context/AuthenticationContext';
 import PainterProvider from './hooks/context/PainterContext';
-import UserFeed from "./components/UserFeed"
+import { AuthenticationContext } from './hooks/context/AuthenticationContext';
+import { Outlet } from "react-router-dom";
 import UserRegister from "./components/UserRegister";
 import Footer from "./components/Footer";
 import './styles/app.css';
 
 function App() {
 
-  const { user, logout } = useContext(AuthenticationContext);
-  console.log(user)
-
+  const { logout } = useContext(AuthenticationContext);
   return (
     <div className="App">
-        <PainterProvider>
+      <PainterProvider>
 
-      <Routes>
+        <UserRegister />
 
-        {user ? (
-          <Route path="/feed" element={ <UserFeed /> } />
-        ):(
-          <Route path="/register" element={ <UserRegister /> } />
-          )
-        }
-      </Routes>
+      </PainterProvider>
+      
+      <Footer />
 
-        </PainterProvider>
+      <Outlet />
 
-        <Footer />
-
-        <Link to="/feed">
-          <button>Ir al feed</button>      
-        </Link>
-
-        <button onClick={logout}>Cerrar sesión</button>      
-
-
+      <button onClick={logout}>Cerrar sesión</button>  
     </div>
   );
 }
