@@ -4,7 +4,7 @@ export const PainterContext = createContext();
 
 function PainterProvider({ children }) {
 
-  const colors = [
+  const colorsList = [
     { name: "red", hex: "#F50D5A" },
     { name: "orange", hex: "#FF865C" },
     { name: "yellow", hex: "#FFEA5C" },
@@ -13,15 +13,17 @@ function PainterProvider({ children }) {
     { name: "violet", hex: "#800FFF" }
   ];
 
-  const [colorList, setColorList] = useState(colors[0]);
+  const [ colorSelected, setColorSelected ] = useState(colorsList[0]);
+  const [ stateColor, setStateColor ] = useState(false);
 
   const handleColor = (color) => {
-		setColorList(color);
+		setColorSelected(color);
+    setStateColor(true);
 	}
 
   return (
     <PainterContext.Provider
-      value={ {colors, colorList, handleColor} }
+      value={ { colorSelected, colorsList, handleColor, stateColor } }
     >
       {children}
     </PainterContext.Provider>
