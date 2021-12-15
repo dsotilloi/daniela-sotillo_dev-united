@@ -1,15 +1,34 @@
-import React from "react";
-import Header from "./Header";
-import Main from "./Main";
+import React, { useContext } from "react";
+import { AuthenticationContext } from '../hooks/context/AuthenticationContext';
+import UserWelcome from "./UserWelcome";
+import SignIn from "./SignIn";
 
 
 function UserRegister() {
 
+  const image = require.context('../assets/images', true);
+  const { user } = useContext(AuthenticationContext);
+
   return (
-    <section className="user-register">
-        <Header />
-        <Main />
-    </section>
+    <>
+      <header>
+        <div>
+          <img src={ image(`./dev-united-logo.svg`).default } alt='logo' />
+          <img src={ image(`./dev-united-naming.svg`).default } alt='naming' />
+        </div>
+      </header>
+
+      <main>
+
+        {user ? (
+          <UserWelcome />
+        ):(
+          <SignIn />
+        )}
+
+      </main>
+
+    </>
   );
 }
 
