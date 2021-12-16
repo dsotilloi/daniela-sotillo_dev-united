@@ -1,12 +1,12 @@
 import React from "react";
 import '../styles/colorPicker.css';
 
-function ColorPicker({ color, handleColor }) {
+function ColorPicker({ color, handle }) {
 
   return (
     <li 
     className="color-picker"
-    onClick={() => handleColor( color.hex )}
+    onClick={() => handle( color.hex )}
     style={{ backgroundColor: color.hex }} >
     </li>
   );
