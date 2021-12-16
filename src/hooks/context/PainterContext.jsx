@@ -13,17 +13,13 @@ function PainterProvider({ children }) {
     { name: "violet", hex: "#800FFF" }
   ];
 
-  const [ colorSelected, setColorSelected ] = useState(colorsList[0]);
   const [ stateColor, setStateColor ] = useState(false);
 
-  const handleColor = (color) => {
-		setColorSelected(color);
-    setStateColor(true);
-	}
+
 
   return (
     <PainterContext.Provider
-      value={ { colorSelected, colorsList, handleColor, stateColor } }
+      value={ { colorsList, stateColor, setStateColor } }
     >
       {children}
     </PainterContext.Provider>
