@@ -11,24 +11,24 @@ import '../styles/userWelcome.css';
 
 const UserWelcome = () => {
 
-	const { colorsList, stateColor, setStateColor } = useContext(PainterContext);
+	const { colorsList } = useContext(PainterContext); //cambiar context por un helper
 	const navigate = useNavigate();
 
-	const [ color, setColor ] = useState({ color: "" })
+	const [ color, setColor ] = useState({ color: "", selected: false }) 
 	const [ userLogged, setUserLogged ] = useState([]);
   const [ user, setUser ] = useState(null);
-	const [ username, setUsername ] = useState({ uid: "",	author: "" })
+	const [ author, setAuthor ] = useState({ nickname: "", uid: "" })
 
 	useEffect(() => {
 
-		const cancelSubscription = firestore
+		const unsubscribe = firestore
 			.collection( "posts" )
 			.onSnapshot(( snapshot ) => {
 				const userInfo = snapshot.docs.map((doc) => {
 					return {
 						id: doc.id,
-						uid: doc.data().username.uid,
-						author: doc.data().username.author,
+						uid: doc.data().author.uid,
+						nickname: doc.data().author.nickname,
 						color: doc.data().color.color
 					};
 				});
@@ -41,63 +41,68 @@ const UserWelcome = () => {
 				setUser(user);
 			});
 
-			return () => cancelSubscription();
+			return () => unsubscribe();
 
 	}, [])
 	
 	const handleInput = (e) => {
-		let username = {
-			author: e.target.value,
+		let author = {
+			nickname: e.target.value,
       uid: user.uid
 		};
-		setUsername( username );
+		setAuthor( author );
 	}
 
 	const handleColor = ( colorSelected ) => {
 		let color = {
 			color: colorSelected,
+			selected: true
 		};
 		setColor( color );
-		setStateColor( true );
 	}
 
-	const handleUserStyle = async (e) => {
+	const handleUserStyle = async(e) => {
 		e.preventDefault();
-    await firestore.collection( "posts" ).add( { username, color } );
-		navigate("feed");
+    await firestore.collection( "posts" ).add( { author, color } );
+
+		navigate( "feed" );
 	}
 
 	///////////////////////////////////////////////////
 
 	console.log(userLogged);
-	console.log(user);
-	// console.log(stateColor);
 	
 	return (
 		<section className="UserWelcome">
 
-			<h2>WELCOME NAME!</h2>
+			{user && 
+				<>
+					<h2>WELCOME { user.displayName }!</h2>
+	
+					<input 
+						type="text" 
+						onChange={ handleInput } 
+						placeholder="Type your nickname" 
+						value={ author.nickname }
+						/>
+		
+					<p>Select your favorite color:</p>
+		
+					<ul className='username__color'>
+						{colorsList.map((color) => 
+								<ColorPicker 
+								color={ color } 
+								handle={ handleColor } 
+								key={ color.hex } />
+							)
+						}
+					</ul>
 			
-			<input 
-				type="text" 
-				onChange={ handleInput } 
-				placeholder="Type your username" 
-				value={ username.author }
-				/>
+				</>							
+							
+			}
 
-			<p>Select your favorite color:</p>
-
-			<ul className='username__color'>
-				{colorsList.map((color) => 
-						<ColorPicker 
-						color={ color } 
-						handle={ handleColor } 
-						key={ color.hex } />
-					)
-				}
-			</ul>
-			
-			{username.author !== "" && stateColor && (
+			{ author.nickname !== "" && color.selected && (
 					<Button cta={ cta.continue } handle={ handleUserStyle } />
 				)
 			}
