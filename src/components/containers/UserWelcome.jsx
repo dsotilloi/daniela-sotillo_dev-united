@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import { firestore } from "../../firebase/firebase";
+import { firestore } from "../../firebase/firebase";
 import { AppContext } from '../../hooks/context/AppContext';
 import { cta } from "../../helpers/button-cta";
 import { colorsList } from "../../helpers/colorsList";
@@ -19,8 +19,9 @@ const UserWelcome = () => {
 		color, 
 		setColor, 
 		author, 
-		setAuthor 
+		setAuthor
 	 } = useContext(AppContext);
+
 	const navigate = useNavigate();
 
 	const handleInput = (e) => {
@@ -30,7 +31,7 @@ const UserWelcome = () => {
 			photo: user.photoURL
 		};
 		setAuthor( newAuthor );
-	}
+	};
 
 	const handleColor = ( colorSelected ) => {
 		let newColor = {
@@ -38,12 +39,12 @@ const UserWelcome = () => {
 			selected: true
 		};
 		setColor( newColor );
-	}
+	};
 
 	const handleButton = (e) => {
 		e.preventDefault();
-		navigate( "feed" );
-	}
+		navigate( "/feed" );
+	};
 
 	return (
 		<section className="UserWelcome">
@@ -63,23 +64,19 @@ const UserWelcome = () => {
 		
 					<ul className='username__color'>
 						{colorsList.map((color) => 
-								<ColorPicker 
+							<ColorPicker 
 								color={ color } 
 								handle={ handleColor } 
-								key={ color.hex } />
-							)
-						}
+								key={ color.hex } 
+							/>
+						)}
 					</ul>
-			
-				</>							
-							
+				</>			
 			}
 
 			{ author.nickname !== "" && color.selected && (
-					<Button cta={ cta.continue } handle={ handleButton } />
-				)
-			}
-
+				<Button cta={ cta.continue } handle={ handleButton } />
+			)}
 		</section>
 	);
 }
