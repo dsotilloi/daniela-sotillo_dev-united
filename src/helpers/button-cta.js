@@ -1,5 +1,6 @@
 export const cta = {
     signIn: 'Sign in with Google',
     continue: 'continue',
-    logout: 'logout'
+    logout: 'logout',
+    post: 'post'
 }
