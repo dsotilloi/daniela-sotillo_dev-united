@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { firestore } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../hooks/context/AppContext";
 import { cta } from "../../helpers/button-cta";
 
@@ -8,10 +9,10 @@ import Button from "../presentational/Button";
 import Avatar from "../presentational/Avatar";
 import PostContent from "../presentational/PostContent";
 
-
 function UserFeed() {
 
   const image = require.context('../../assets/images', true);
+  const navigate = useNavigate();
 
   const { 
     user, 
@@ -21,7 +22,6 @@ function UserFeed() {
     color,
     postsList 
   } = useContext(AppContext);
-
 
   const handleInput = (e) => {
     const newPost = {
@@ -34,29 +34,33 @@ function UserFeed() {
     setPost( newPost );
   };
 
-  const handleButton = () => {
-    firestore.collection( "posts" ).add( Object.assign( author, color, post ) );
+  const handleButton = ( id ) => {
+		firestore.collection( "posts" ).add({ ...author, ...color, ...post });
   };
-  
-  //////////////////////////////////////////////////////
-  
-  postsList.map((post)=> {
-    console.log(post.photo);
-  })
 
+  const handleDelete = ( id ) => {
+    firestore.doc(`posts/${ id }`).delete();
+  };
+
+  const handleAvatar = (e) => {
+    e.preventDefault();
+		navigate( "/profile" );
+  };
+
+  console.log({ ...post });
+  
   return (
     <section className="user-feed">
 
       <header>
         {user && 
-          <Avatar src={ user.photoURL } />
+          <Avatar src={ user.photoURL } handle={ handleAvatar } />
         }
 
         <div>
           <img src={ image(`./dev-united-logo.svg`).default } alt='logo' />
           <img src={ image(`./dev-united-naming.svg`).default } alt='naming' />
         </div>
-
       </header>
 
       <main>
@@ -69,26 +73,22 @@ function UserFeed() {
           />
 
           <p>CARACTERES UTILIZADOS / 200 max.</p>
-
           <Button cta={ cta.post } handle={ handleButton } />
-
-       
         </section>
         
         <section>
-
-          {postsList.map((post)=> {
+          {postsList.map((post)=> (
               <PostContent 
-              key={ post.id } 
-              nickname={ post.nickname }
-              message={ post.message } 
-              src={ post.photo }
-              // date={ post.post.date }
+                key={ post.id } 
+                nickname={ post.nickname }
+                message={ post.message } 
+                src={ post.photo }
+                date={ post.date }
+                like={ post.like }
+                counterLikes={ post.counterLikes }
+                handle={ handleDelete }
               />
-            })
-          }
-            
-
+          ))}
         </section>
 
       </main>
