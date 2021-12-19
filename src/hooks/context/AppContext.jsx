@@ -34,10 +34,16 @@ function AppProvider({ children }) {
 			.onSnapshot(( snapshot ) => {
 				const newPostContent = snapshot.docs.map((doc) => {
 					return {
+						color: doc.data().color,
+						counterLikes: doc.data().counterLikes,
+						date: doc.data().date,
 						id: doc.id,
+						like: doc.data().like,
+						message: doc.data().message,
 						nickname: doc.data().nickname,
 						photo: doc.data().photo,
-						message: doc.data().message
+						selected: doc.data().selected,
+						uid: doc.data().uid
 					};
 				});
 
