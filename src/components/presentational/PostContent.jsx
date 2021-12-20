@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "./Avatar";
 
-function PostContent({ src, message, date, nickname, like, counterLikes, handle }) {
+function PostContent({ src, message, date, nickname, like, counterLikes, handle, postId }) {
 
   const image = require.context( '../../assets/images', true );
 
@@ -13,7 +13,7 @@ function PostContent({ src, message, date, nickname, like, counterLikes, handle 
         <p>{ message }</p>
         <p>{ like }</p>
         <p>{ counterLikes }</p>
-        <img src={ image(`./delete-icon.svg`).default } alt="delete icon" onClick={ handle }/>
+        <img src={ image(`./delete-icon.svg`).default } alt="delete icon" onClick={ () => handle( postId ) }/>
       </div>
     );
   }
