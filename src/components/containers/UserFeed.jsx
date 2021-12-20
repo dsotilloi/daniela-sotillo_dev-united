@@ -34,7 +34,7 @@ function UserFeed() {
     setPost( newPost );
   };
 
-  const handleButton = ( id ) => {
+  const handleButton = () => {
 		firestore.collection( "posts" ).add({ ...author, ...color, ...post });
   };
 
@@ -47,7 +47,7 @@ function UserFeed() {
 		navigate( "/profile" );
   };
 
-  console.log({ ...post });
+  // console.log({ ...post });
   
   return (
     <section className="user-feed">
@@ -87,6 +87,7 @@ function UserFeed() {
                 like={ post.like }
                 counterLikes={ post.counterLikes }
                 handle={ handleDelete }
+                postId={ post.id }
               />
           ))}
         </section>

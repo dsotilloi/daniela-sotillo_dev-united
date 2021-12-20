@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { firestore } from "../../firebase/firebase";
 import { AppContext } from '../../hooks/context/AppContext';
 import { cta } from "../../helpers/button-cta";
 import { colorsList } from "../../helpers/colorsList";
