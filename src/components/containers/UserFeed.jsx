@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../hooks/context/AppContext";
 import { cta } from "../../helpers/button-cta";
 
-import TextInput from "../presentational/TextInput";
-import Button from "../presentational/Button";
 import Avatar from "../presentational/Avatar";
+import Button from "../presentational/Button";
 import PostContent from "../presentational/PostContent";
+import TextInput from "../presentational/TextInput";
 
 function UserFeed() {
 
@@ -15,46 +15,63 @@ function UserFeed() {
   const navigate = useNavigate();
 
   const { 
-    user, 
-    post, 
-    setPost, 
     author, 
     color,
-    postsList 
+    post, 
+    postsList,
+    setPost, 
+    user
+
   } = useContext(AppContext);
 
   const handleInput = (e) => {
     const newPost = {
       message: e.target.value, 
       date: new Date(), 
-      like: "", 
-      counterLikes: "", 
-      id: ""   
+      like: 0, 
+      counterLikes: 0, 
+      id: ""
     }
     setPost( newPost );
   };
 
-  const handleButton = () => {
+  const addPost = () => {
 		firestore.collection( "posts" ).add({ ...author, ...color, ...post });
   };
 
-  const handleDelete = ( id ) => {
+  const deletePost = ( id ) => {
     firestore.doc(`posts/${ id }`).delete();
   };
 
-  const handleAvatar = (e) => {
+  const avatarProfile = (e) => {
     e.preventDefault();
 		navigate( "/profile" );
   };
 
-  // console.log({ ...post });
+  const likePost = ( id, num) => {
+    firestore.doc(`posts/${ id }`).update({
+      like: num + 1
+    });
+  };
+
+  const unlikePost = ( id, num) => {
+
+    firestore.doc(`posts/${ id }`).update({
+      like: num - 1
+    });
+  };
+
+  // postsList.map((post)=> console.log(post.counterLikes));
+  // postsList.map((post)=> console.log(`Selected Firebase: ${post.likeSelected}`));
+  // console.log(`Selected State: ${likeSelected}`);
+  
   
   return (
     <section className="user-feed">
 
       <header>
         {user && 
-          <Avatar src={ user.photoURL } handle={ handleAvatar } />
+          <Avatar src={ user.photoURL } handle={ avatarProfile } />
         }
 
         <div>
@@ -73,22 +90,24 @@ function UserFeed() {
           />
 
           <p>CARACTERES UTILIZADOS / 200 max.</p>
-          <Button cta={ cta.post } handle={ handleButton } />
+          <Button cta={ cta.post } handle={ addPost } />
         </section>
         
         <section>
           {postsList.map((post)=> (
-              <PostContent 
-                key={ post.id } 
-                nickname={ post.nickname }
-                message={ post.message } 
-                src={ post.photo }
-                date={ post.date }
-                like={ post.like }
-                counterLikes={ post.counterLikes }
-                handle={ handleDelete }
-                postId={ post.id }
-              />
+            <PostContent 
+              counterLikes={ post.counterLikes }
+              date={ post.date }
+              handleDelete={ deletePost }
+              key={ post.id } 
+              like={ post.like }
+              message={ post.message } 
+              nickname={ post.nickname }
+              postId={ post.id }
+              src={ post.photo }
+              handleLike={ likePost }
+              handleUnlike={ unlikePost }
+            />
           ))}
         </section>
 
