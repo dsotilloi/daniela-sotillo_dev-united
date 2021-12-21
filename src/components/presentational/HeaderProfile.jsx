@@ -10,7 +10,7 @@ function HeaderProfile({ src, cta, handle, nickname }) {
 
   return (
 		<header>
-			<img src={ image(`./back-icon.svg`).default } alt='back icon' />
+			<img src={ image(`./back.svg`).default } alt='back icon' />
 			<p>{ nickname }</p>
 			<Button cta={ cta } handle={ handle } />
 			<Avatar src={ src } />
