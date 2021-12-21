@@ -24,7 +24,7 @@ function AppProvider({ children }) {
 		date: "", 
 		like: "", 
 		counterLikes: "", 
-		id: "" 
+		id: ""
 	 })
 	
 	useEffect(() => {
@@ -43,7 +43,8 @@ function AppProvider({ children }) {
 						nickname: doc.data().nickname,
 						photo: doc.data().photo,
 						selected: doc.data().selected,
-						uid: doc.data().uid
+						uid: doc.data().uid,
+						likeSelected: doc.data().likeSelected
 					};
 				});
 

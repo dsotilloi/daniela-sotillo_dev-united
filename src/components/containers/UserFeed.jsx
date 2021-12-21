@@ -21,7 +21,6 @@ function UserFeed() {
     postsList,
     setPost, 
     user
-
   } = useContext(AppContext);
 
   const handleInput = (e) => {
@@ -34,6 +33,11 @@ function UserFeed() {
     }
     setPost( newPost );
   };
+  
+  const avatarProfile = (e) => {
+    e.preventDefault();
+    navigate( "/profile" );
+  };
 
   const addPost = () => {
 		firestore.collection( "posts" ).add({ ...author, ...color, ...post });
@@ -43,28 +47,19 @@ function UserFeed() {
     firestore.doc(`posts/${ id }`).delete();
   };
 
-  const avatarProfile = (e) => {
-    e.preventDefault();
-		navigate( "/profile" );
-  };
-
-  const likePost = ( id, num) => {
+  const likePost = ( id, like) => {
     firestore.doc(`posts/${ id }`).update({
-      like: num + 1
+      like: like + 1
     });
   };
 
-  const unlikePost = ( id, num) => {
-
+  const unlikePost = ( id, like) => {
     firestore.doc(`posts/${ id }`).update({
-      like: num - 1
+      like: like - 1
     });
   };
 
-  // postsList.map((post)=> console.log(post.counterLikes));
-  // postsList.map((post)=> console.log(`Selected Firebase: ${post.likeSelected}`));
-  // console.log(`Selected State: ${likeSelected}`);
-  
+  console.log(user);
   
   return (
     <section className="user-feed">

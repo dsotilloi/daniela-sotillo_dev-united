@@ -3,26 +3,34 @@ import { AppContext } from "../../hooks/context/AppContext";
 import { cta } from "../../helpers/button-cta";
 
 import HeaderProfile from "../presentational/HeaderProfile";
+import Button from "../presentational/Button";
 
 
 function UserProfile() {
 
   // const image = require.context( '../../assets/images', true );
-  const { user, author } = useContext( AppContext );
-
-  console.log(author)
+  const { user, author, logout } = useContext( AppContext );
 
   return (
     <>
       {user && 
-        <HeaderProfile src={ user.photoURL } cta={ cta.logout } nickname={ author.nickname }/>
+        <HeaderProfile 
+        cta={ cta.logout } 
+        src={ user.photoURL } 
+        nickname={ author.nickname } 
+        handle={ logout } />
       }
 
       <main>
 
-          <section>
+        <section>
+          <Button />
+          <Button />
+        </section>
 
-          </section>
+        
+
+
       </main>
 
     </>
