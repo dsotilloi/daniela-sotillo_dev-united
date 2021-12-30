@@ -5,73 +5,68 @@ export const AppContext = createContext();
 
 function AppProvider({ children }) {
 
-	const [ user, setUser ] = useState(null);
+	const [ loggedUser, setLoggetUser ] = useState([]);
 	const [ postsList, setPostsList ] = useState([]);
-	
-	const [ color, setColor ] = useState({ 
-		color: "", 
-		selected: false 
-	}) 
-	
-	const [ author, setAuthor ] = useState({ 
-		nickname: "", 
-		uid: "", 
-		photo: "" 
-	})
-	
-	const [ post, setPost ] = useState({ 
-		message: "", 
-		date: "", 
-		like: "", 
-		counterLikes: "", 
-		id: ""
-	 })
+	const [ user, setUser ] = useState(null);
 	
 	useEffect(() => {
 
-		const unsubscribe = firestore
-			.collection( "posts" )
-			.onSnapshot(( snapshot ) => {
-				const newPostContent = snapshot.docs.map((doc) => {
-					return {
-						color: doc.data().color,
-						counterLikes: doc.data().counterLikes,
-						date: doc.data().date,
-						id: doc.id,
-						like: doc.data().like,
-						message: doc.data().message,
-						nickname: doc.data().nickname,
-						photo: doc.data().photo,
-						selected: doc.data().selected,
-						uid: doc.data().uid,
-						likeSelected: doc.data().likeSelected
-					};
+		if ( user ) {
+			const unsubscribeUser = firestore
+				.collection( 'users' )
+				.onSnapshot(( snapshot ) => {
+					const user = snapshot.docs.map((doc) => {
+						return {
+							color: doc.data().color,
+							email: doc.data().email,
+							name: doc.data().name,
+							nickname: doc.data().nickname,
+							photo: doc.data().photo,
+							uid: doc.id
+						};
+					});
+					setLoggetUser( user );
 				});
 
-				setPostsList( newPostContent );
-			});
+				const unsubscribePosts = firestore
+				.collection( 'posts' )
+				.onSnapshot(( snapshot ) => {
+					const post = snapshot.docs.map((doc) => {
+						return {
+							authorColor: doc.data().authorColor,
+							authorNickname: doc.data().authorNickname,
+							authorPhoto: doc.data().authorPhoto,
+							authorUid: doc.data().authorUid,
+							date: doc.data().date,
+							id: doc.id,
+							likes: doc.data().likes,
+							message: doc.data().message
+						};
+					});
+					setPostsList( post );
+				});
 
-			auth.onAuthStateChanged(( user ) => {
-				setUser(user);
-			});
+			return () => {
+				unsubscribeUser();
+				unsubscribePosts();
+			}
+		};
 
-			return () => unsubscribe();
-	}, [])
-	
+		auth.onAuthStateChanged(( user ) => {
+			setUser(user);
+		});
+			
+	}, [user]);
+
 	return (
 		<AppContext.Provider
 			value={{ 
-				user, 
+				loggedUser,
 				loginConGoogle, 
 				logout, 
 				postsList, 
 				setPostsList,
-				color, 
-				setColor,
-				author, 
-				setAuthor,
-				post, 
-				setPost
+				user
 			}}
 		>
 			{children}
