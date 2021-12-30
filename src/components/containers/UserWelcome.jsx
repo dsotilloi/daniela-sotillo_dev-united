@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { AppContext } from '../../hooks/context/AppContext';
-import { cta } from "../../helpers/button-cta";
 import { colorsList } from "../../helpers/colorsList";
-
+import { cta } from "../../helpers/button-cta";
+import { firestore } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../presentational/Button";
 import ColorPicker from "../presentational/ColorPicker";
@@ -13,35 +13,46 @@ import '../../styles/userWelcome.css';
 
 const UserWelcome = () => {
 
-	const { 
-		user, 
-		color, 
-		setColor, 
-		author, 
-		setAuthor
-	 } = useContext(AppContext);
+	const { user, postsList } = useContext(AppContext);
 
 	const navigate = useNavigate();
 
-	const handleInput = (e) => {
-		let newAuthor = {
+	const [ colorSelected, setColorSelected ] = useState("");
+	const [ nickname, setNickname ] = useState("");
+
+	//Agrega o actualiza la información del usuario logueado 
+	//en la colección "Users" de Firestore:
+	const setUser = (e) => {
+			firestore.collection('users').doc(user.uid).set({
+			email: user.email,
+			name: user.displayName,
 			nickname: e.target.value,
-      uid: user.uid,
 			photo: user.photoURL
-		};
-		setAuthor( newAuthor );
+		});
+		setNickname( e.target.value );
 	};
 
-	const handleColor = ( colorSelected ) => {
-		let newColor = {
-			color: colorSelected,
-			selected: true
-		};
-		setColor( newColor );
+	//Agrega el color seleccionado por el usuario
+	//en la colección "Users" de Firestore:
+	const setColor = ( color ) => {
+		firestore.collection('users').doc(user.uid).set({
+			color: color,
+		}, { merge: true });
+		setColorSelected( color );
 	};
 
-	const handleButton = (e) => {
+	//Actualiza la información del usuario en la lista de los posts 
+	//que haya hecho en sesiones anteriores y lo deriva a "/feed":
+	const goFeed = (e) => {
 		e.preventDefault();
+		const userPosts = postsList.filter((post) => post.authorUid === user.uid);
+		userPosts.map((post) => (
+				firestore.doc( `posts/${ post.id }` ).update({
+					authorColor: colorSelected,
+					authorNickname: nickname,
+					authorPhoto: user.photoURL
+				})
+			))
 		navigate( "/feed" );
 	};
 
@@ -54,9 +65,8 @@ const UserWelcome = () => {
 					<p>e-Mail: { user.email } </p>
 	
 					<TextInput 
-						handle={ handleInput } 
+						handle={ setUser } 
 						placeholder="Type your nickname" 
-						value={ author.nickname }
 					/>
 		
 					<p>Select your favorite color:</p>
@@ -65,7 +75,7 @@ const UserWelcome = () => {
 						{colorsList.map((color) => 
 							<ColorPicker 
 								color={ color } 
-								handle={ handleColor } 
+								handle={ setColor } 
 								key={ color.hex } 
 							/>
 						)}
@@ -73,9 +83,13 @@ const UserWelcome = () => {
 				</>			
 			}
 
-			{ author.nickname !== "" && color.selected && (
-				<Button cta={ cta.continue } handle={ handleButton } />
-			)}
+			{nickname && colorSelected &&
+				<Button 
+					cta={ cta.continue } 
+					handle={ goFeed } 
+				/>
+			}
+
 		</section>
 	);
 }
