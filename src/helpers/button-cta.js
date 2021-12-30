@@ -2,5 +2,7 @@ export const cta = {
     signIn: 'Sign in with Google',
     continue: 'continue',
     logout: 'logout',
-    post: 'post'
+    post: 'post',
+    posts: 'posts',
+    favorites: 'favorites'
 }
