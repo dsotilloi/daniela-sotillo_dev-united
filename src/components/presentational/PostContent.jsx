@@ -5,7 +5,7 @@ import Avatar from "./Avatar";
 
 
 function PostContent({ 
-  handleDelete, 
+  deletePost, 
   handleLike,
   handleUnlike,
   message, 
@@ -38,7 +38,11 @@ function PostContent({
       <Avatar src={ photo } />
       <p>{ nickname }</p>
       <p>{ post.localeDate }</p>
-      <img src={ image(`./delete-icon.svg`).default } alt="delete icon" onClick={ () => handleDelete( postId )} />
+      <img src={ 
+        image(`./delete-icon.svg`).default } 
+        alt="delete icon" 
+        onClick={ () => deletePost( postId )} 
+      />
       <p>{ message }</p>
 
       {post.like ? (

@@ -10,9 +10,10 @@ import Button from "../presentational/Button";
 import PostContent from "../presentational/PostContent";
 import TextInput from "../presentational/TextInput";
 
-function UserFeed() {
+function Feed() {
   
   const [ message, setMessage ] = useState("");
+  const [ showProfile, setShowProfile ] = useState( false );
   const { postsList, user, loggedUser } = useContext(AppContext);
   const navigate = useNavigate();
   const image = require.context('../../assets/images', true);
@@ -20,6 +21,7 @@ function UserFeed() {
   //Deriva al usuario a "/profile":
   const goProfile = (e) => {
     e.preventDefault();
+    setShowProfile( !showProfile );
     navigate( "/profile" );
   };
 
@@ -33,22 +35,25 @@ function UserFeed() {
     const authorPref = loggedUser.filter(( logged ) => logged.uid === user.uid);
     authorPref.map((author) => (
       firestore.collection( 'posts' ).add({
-          authorColor: author.color,
-          authorNickname: author.nickname,
-          authorPhoto: author.photo,
-          authorUid: author.uid,
-          date: new Date(),
-          likes: [],
-          message: message
-          })
+        authorColor: author.color,
+        authorNickname: author.nickname,
+        authorPhoto: author.photo,
+        authorUid: author.uid,
+        date: new Date(),
+        likes: [],
+        message: message
+      })
     ));
     setMessage("");
   };
 
   //Elimina el post de Firebase:
-  const deletePost = ( id ) => {
-    firestore.doc( `posts/${ id }` ).delete();
-  };
+  const deletePost = ( postId ) => {
+    if(window.confirm( '¡Hey! ¿Seguro quieres borrar tu post? 😱' )){
+      firestore.doc( `posts/${ postId }` ).delete();
+      alert( '¡Sigue adelante! Inspírate y comparte otro ahora 💪💡')
+    }
+  }
 
   //Actualiza el array de likes agregando el uid del usuario da like:
   const likePost = ( postId ) => {
@@ -99,13 +104,13 @@ function UserFeed() {
           {postsList.map((post)=> (
             <PostContent 
               authorUid={ post.authorUid }
-              handleDelete={ deletePost }
+              deletePost = { deletePost }
               handleLike={ likePost }
               handleUnlike={ unlikePost }
               key={ post.id } 
               message={ post.message } 
               nickname={ post.authorNickname }
-              photo={post.authorPhoto}
+              photo={ post.authorPhoto}
               postId={ post.id }
             />
           ))}
@@ -117,4 +122,4 @@ function UserFeed() {
   );
 }
 
-export default UserFeed;
+export default Feed;
