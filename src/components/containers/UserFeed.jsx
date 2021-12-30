@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import { firestore } from "../../firebase/firebase";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import firebase, { firestore } from "../../firebase/firebase";
 import { AppContext } from "../../hooks/context/AppContext";
 import { cta } from "../../helpers/button-cta";
+import { sortPostsList } from "../../helpers/sortPostsList";
+import { useNavigate } from "react-router-dom";
 
 import Avatar from "../presentational/Avatar";
 import Button from "../presentational/Button";
@@ -10,63 +11,69 @@ import PostContent from "../presentational/PostContent";
 import TextInput from "../presentational/TextInput";
 
 function UserFeed() {
-
-  const image = require.context('../../assets/images', true);
-  const navigate = useNavigate();
-
-  const { 
-    author, 
-    color,
-    post, 
-    postsList,
-    setPost, 
-    user
-  } = useContext(AppContext);
-
-  const handleInput = (e) => {
-    const newPost = {
-      message: e.target.value, 
-      date: new Date(), 
-      like: 0, 
-      counterLikes: 0, 
-      id: ""
-    }
-    setPost( newPost );
-  };
   
-  const avatarProfile = (e) => {
+  const [ message, setMessage ] = useState("");
+  const { postsList, user, loggedUser } = useContext(AppContext);
+  const navigate = useNavigate();
+  const image = require.context('../../assets/images', true);
+
+  //Deriva al usuario a "/profile":
+  const goProfile = (e) => {
     e.preventDefault();
     navigate( "/profile" );
   };
 
-  const addPost = () => {
-		firestore.collection( "posts" ).add({ ...author, ...color, ...post });
+  //Maneja el input para capturar el mensaje del usuario:
+  const handleMessage = (e) => {
+    setMessage(e.target.value);
   };
-
-  const deletePost = ( id ) => {
-    firestore.doc(`posts/${ id }`).delete();
-  };
-
-  const likePost = ( id, like) => {
-    firestore.doc(`posts/${ id }`).update({
-      like: like + 1
-    });
-  };
-
-  const unlikePost = ( id, like) => {
-    firestore.doc(`posts/${ id }`).update({
-      like: like - 1
-    });
-  };
-
-  console.log(user);
   
+  //Envía el mensaje del usuario y el contenido del post a Firebase:
+  const addPost = () => {
+    const authorPref = loggedUser.filter(( logged ) => logged.uid === user.uid);
+    authorPref.map((author) => (
+      firestore.collection( 'posts' ).add({
+          authorColor: author.color,
+          authorNickname: author.nickname,
+          authorPhoto: author.photo,
+          authorUid: author.uid,
+          date: new Date(),
+          likes: [],
+          message: message
+          })
+    ));
+    setMessage("");
+  };
+
+  //Elimina el post de Firebase:
+  const deletePost = ( id ) => {
+    firestore.doc( `posts/${ id }` ).delete();
+  };
+
+  //Actualiza el array de likes agregando el uid del usuario da like:
+  const likePost = ( postId ) => {
+    firestore.doc( `posts/${ postId }` ).update({
+      likes: firebase.firestore.FieldValue.arrayUnion( user.uid )
+    });
+  };
+
+  //Actualiza el array de likes eliminando el uid del usuario que quita el like:
+  const unlikePost = ( postId ) => {
+    firestore.doc( `posts/${ postId }` ).update({
+      likes: firebase.firestore.FieldValue.arrayRemove( user.uid )
+    });
+  }; 
+
+  //Ordena lista de post según la fecha de publicación:
+  sortPostsList( postsList );
+
   return (
     <section className="user-feed">
 
       <header>
+
         {user && 
-          <Avatar src={ user.photoURL } handle={ avatarProfile } />
+          <Avatar src={ user.photoURL } handle={ goProfile } />
         }
 
         <div>
@@ -79,9 +86,9 @@ function UserFeed() {
 
         <section>
           <TextInput 
-            handle={ handleInput }
+            handle={ handleMessage }
             placeholder="What’s happening?"
-            value={ post.message }
+            value={ message }
           />
 
           <p>CARACTERES UTILIZADOS / 200 max.</p>
@@ -91,17 +98,15 @@ function UserFeed() {
         <section>
           {postsList.map((post)=> (
             <PostContent 
-              counterLikes={ post.counterLikes }
-              date={ post.date }
+              authorUid={ post.authorUid }
               handleDelete={ deletePost }
-              key={ post.id } 
-              like={ post.like }
-              message={ post.message } 
-              nickname={ post.nickname }
-              postId={ post.id }
-              src={ post.photo }
               handleLike={ likePost }
               handleUnlike={ unlikePost }
+              key={ post.id } 
+              message={ post.message } 
+              nickname={ post.authorNickname }
+              photo={post.authorPhoto}
+              postId={ post.id }
             />
           ))}
         </section>
