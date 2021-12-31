@@ -3,7 +3,7 @@ import firebase, { firestore } from "../../firebase/firebase";
 import { AppContext } from "../../hooks/context/AppContext";
 import { useNavigate } from "react-router-dom";
 
-import Feed from "./Feed";
+import Feed from "../presentational/Feed";
 import Profile from "./Profile"
 
 function Home() {
