@@ -5,7 +5,7 @@ export const AppContext = createContext();
 
 function AppProvider({ children }) {
 
-	const [ loggedUser, setLoggetUser ] = useState([]);
+	const [ loggedUsers, setLoggetUsers ] = useState([]);
 	const [ postsList, setPostsList ] = useState([]);
 	const [ user, setUser ] = useState(null);
 	
@@ -25,7 +25,7 @@ function AppProvider({ children }) {
 							uid: doc.id
 						};
 					});
-					setLoggetUser( user );
+					setLoggetUsers( user );
 				});
 
 				const unsubscribePosts = firestore
@@ -61,7 +61,7 @@ function AppProvider({ children }) {
 	return (
 		<AppContext.Provider
 			value={{ 
-				loggedUser,
+				loggedUsers,
 				loginConGoogle, 
 				logout, 
 				postsList, 

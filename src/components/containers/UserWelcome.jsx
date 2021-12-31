@@ -43,7 +43,7 @@ const UserWelcome = () => {
 
 	//Actualiza la información del usuario en la lista de los posts 
 	//que haya hecho en sesiones anteriores y lo deriva a "/feed":
-	const goFeed = (e) => {
+	const goToHome = (e) => {
 		e.preventDefault();
 		const userPosts = postsList.filter((post) => post.authorUid === user.uid);
 		userPosts.map((post) => (
@@ -53,7 +53,7 @@ const UserWelcome = () => {
 					authorPhoto: user.photoURL
 				})
 			))
-		navigate( "/feed" );
+		navigate( "/home" );
 	};
 
 	return (
@@ -86,7 +86,7 @@ const UserWelcome = () => {
 			{nickname && colorSelected &&
 				<Button 
 					cta={ cta.continue } 
-					handle={ goFeed } 
+					handle={ goToHome } 
 				/>
 			}
 
