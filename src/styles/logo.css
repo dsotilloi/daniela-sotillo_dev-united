@@ -1,0 +1,16 @@
+/* MOBILE: */
+.logo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30% 0;
+}
+
+.logo__logotype{
+	width: 50%;
+}
+
+.logo__naming{
+	width: 100%;
+	margin: 5% 0;
+}

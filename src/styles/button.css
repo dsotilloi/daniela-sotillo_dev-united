@@ -1,3 +1,6 @@
-.Button {
-    padding: 1rem;
+.button__google {
+	border: none;
+	color: #ffffff;
+	padding: 1rem;
+  background-color: #4285F4;
 }
