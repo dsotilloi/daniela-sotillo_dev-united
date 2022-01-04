@@ -4,11 +4,7 @@
 }
 
 .signIn__p {
-	font-size: 1.8rem;
-	margin: 3rem 0;
+	font-size: 1.6rem;
+	margin: 2.5rem 0;
 }
 
-.signIn__btn {
-	background-color: #ffffff;
-	border: 0.2rem solid #4285F4;
-}

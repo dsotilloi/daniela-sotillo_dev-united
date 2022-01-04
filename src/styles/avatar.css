@@ -1,0 +1,42 @@
+/* MOBILE: */
+
+.avatar {
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.avatar__feed {
+	border: 3px solid;
+	flex-basis: 50%;
+	width: 60%;
+}
+
+.avatar__feed-input {
+	flex-basis: calc(20% - 1rem);
+	height: 100%;
+}
+
+.red {
+	border-color: #F50D5A;
+}
+
+.orange {
+	border-color: #FF865C;
+}
+
+.yellow {
+	border-color: #FFEA5C;
+}
+
+.green {
+	border-color: #00DA76;
+}
+
+.blue {
+	border-color: #0096CE;
+}
+
+.violet {
+	border-color: #800FFF;
+}
+
