@@ -1,10 +1,20 @@
-import React from "react";
+import React from 'react';
 
-function Avatar({ src, handle }) {
+import '../../styles/avatar.css';
+
+function Avatar({ 
+	borderColor, 
+	classNameImg,
+	handle,
+	src 
+	}) {
 	return (
-		<div>
-			<img src={ src } alt="avatar" onClick={ handle } />
-	  </div>
+			<img 
+				alt='avatar' 
+				className={`avatar ${ borderColor } ${ classNameImg }`}
+				onClick={ handle } 
+				src={ src } 
+			/>
 	);
 }
   
