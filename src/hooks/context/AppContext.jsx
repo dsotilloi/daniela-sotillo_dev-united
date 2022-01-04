@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { auth, firestore, loginConGoogle, logout } from "../../firebase/firebase";
+import { auth, firestore } from "../../firebase/firebase";
 
 export const AppContext = createContext();
 
@@ -7,15 +7,17 @@ function AppProvider({ children }) {
 
 	const [ loggedUsers, setLoggetUsers ] = useState([]);
 	const [ postsList, setPostsList ] = useState([]);
-	const [ user, setUser ] = useState(null);
+	const [ user, setUser ] = useState( null );
 	
 	useEffect(() => {
 
+		//Si el usuario esta logueado, actualiza el estado "loggedUsers" y "postsList"
+		//con la información de Firebase:
 		if ( user ) {
 			const unsubscribeUser = firestore
 				.collection( 'users' )
 				.onSnapshot(( snapshot ) => {
-					const user = snapshot.docs.map((doc) => {
+					const user = snapshot.docs.map(( doc ) => {
 						return {
 							color: doc.data().color,
 							email: doc.data().email,
@@ -31,7 +33,7 @@ function AppProvider({ children }) {
 				const unsubscribePosts = firestore
 				.collection( 'posts' )
 				.onSnapshot(( snapshot ) => {
-					const post = snapshot.docs.map((doc) => {
+					const post = snapshot.docs.map(( doc ) => {
 						return {
 							authorColor: doc.data().authorColor,
 							authorNickname: doc.data().authorNickname,
@@ -51,7 +53,9 @@ function AppProvider({ children }) {
 				unsubscribePosts();
 			}
 		};
-
+		
+		//Actualzia el estado "user" cuando con la información del
+		//usuario logueado:
 		auth.onAuthStateChanged(( user ) => {
 			setUser(user);
 		});
@@ -62,14 +66,12 @@ function AppProvider({ children }) {
 		<AppContext.Provider
 			value={{ 
 				loggedUsers,
-				loginConGoogle, 
-				logout, 
 				postsList, 
 				setPostsList,
 				user
 			}}
 		>
-			{children}
+			{ children }
 		</AppContext.Provider>
 	);
 }

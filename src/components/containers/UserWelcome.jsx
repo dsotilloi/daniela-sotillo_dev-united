@@ -7,21 +7,17 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "../presentational/Button";
 import ColorPicker from "../presentational/ColorPicker";
-import TextInput from "../presentational/TextInput";
 
 import '../../styles/userWelcome.css';
 
 const UserWelcome = () => {
 
 	const { user, postsList } = useContext(AppContext);
-
-	const navigate = useNavigate();
-
 	const [ colorSelected, setColorSelected ] = useState("");
 	const [ nickname, setNickname ] = useState("");
-
-	//Agrega o actualiza la información del usuario logueado 
-	//en la colección "Users" de Firestore:
+	const navigate = useNavigate();
+	
+	//Agrega o actualiza la información del usuario logueado en la colección "Users" de Firestore:
 	const setUser = (e) => {
 			firestore.collection('users').doc(user.uid).set({
 			email: user.email,
@@ -32,8 +28,7 @@ const UserWelcome = () => {
 		setNickname( e.target.value );
 	};
 
-	//Agrega el color seleccionado por el usuario
-	//en la colección "Users" de Firestore:
+	//Agrega el color seleccionado por el usuario en la colección "Users" de Firestore:
 	const setColor = ( color ) => {
 		firestore.collection('users').doc(user.uid).set({
 			color: color,
@@ -41,11 +36,11 @@ const UserWelcome = () => {
 		setColorSelected( color );
 	};
 
-	//Actualiza la información del usuario en la lista de los posts 
-	//que haya hecho en sesiones anteriores y lo deriva a "/feed":
-	const goToHome = (e) => {
+	//Actualiza la información del usuario en la lista de los posts que haya hecho en 
+	//sesiones anteriores y lo deriva a "/feed":
+	const goFeed = (e) => {
 		e.preventDefault();
-		const userPosts = postsList.filter((post) => post.authorUid === user.uid);
+		const userPosts = postsList.filter(( post ) => post.authorUid === user.uid);
 		userPosts.map((post) => (
 				firestore.doc( `posts/${ post.id }` ).update({
 					authorColor: colorSelected,
@@ -53,25 +48,36 @@ const UserWelcome = () => {
 					authorPhoto: user.photoURL
 				})
 			))
-		navigate( "/home" );
+		navigate( '/feed' );
 	};
 
 	return (
-		<section className="UserWelcome">
+		<section>
 
 			{user && 
 				<>
-					<h2>WELCOME { user.displayName }!</h2>
-					<p>e-Mail: { user.email } </p>
+					<h1 className='userWelcome__h1'>
+						WELCOME,
+						<span> { user.displayName }!</span> 
+					</h1>
+
+					<p className='userWelcome__p'> 
+						You logged in with the e-Mail: { user.email } 
+					</p>
 	
-					<TextInput 
-						handle={ setUser } 
-						placeholder="Type your nickname" 
+					<input 
+						type='text'
+						onChange={ setUser } 
+						placeholder='Type your nickname'
+						value={ nickname }
+						className='userWelcome__input'
 					/>
 		
-					<p>Select your favorite color:</p>
+					<p className='userWelcome__p' >
+						Select your favorite color:
+					</p>
 		
-					<ul className='username__color'>
+					<ul className='userWelcome__color'>
 						{colorsList.map((color) => 
 							<ColorPicker 
 								color={ color } 
@@ -85,11 +91,11 @@ const UserWelcome = () => {
 
 			{nickname && colorSelected &&
 				<Button 
+					classNameBtn={ 'button-green' }
 					cta={ cta.continue } 
-					handle={ goToHome } 
+					handle={ goFeed } 
 				/>
 			}
-
 		</section>
 	);
 }
