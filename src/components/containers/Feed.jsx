@@ -2,25 +2,36 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../../hooks/context/AppContext';
 import { Link } from 'react-router-dom';
 import { cta } from '../../helpers/button-cta';
-import { sortPostsList } from '../../helpers/sortPostsList';
 import { firestore } from '../../firebase/firebase';
+import { sortPostsList } from '../../helpers/sortPostsList';
 
 import Avatar from '../presentational/Avatar';
 import Button from '../presentational/Button';
+import Logo from '../presentational/Logo';
 import PostContent from './PostContent';
-import TextInput from '../presentational/TextInput';
+
+import '../../styles/feed.css'
 
 function Feed() {
 
 	const { user, postsList, loggedUsers } = useContext( AppContext );
 	const [ message, setMessage ] = useState("");
-	const image = require.context( '../../assets/images', true );
+
+
+  //Obtiene el color y la foto del usuario logueado:
+  const infoUser = loggedUsers.filter(( logged ) => logged.uid === user.uid).map(( logged ) => {
+    return {
+      color: logged.color,
+			photo: logged.photo
+    }
+  });
 
 	//Maneja el input para capturar el mensaje del usuario:
 	const getMessage = ( e ) => {
 		setMessage( e.target.value );
 	};
 
+	//Agrega el post del usuario a Firebase con un ID random:
 	const addPost = () => {
 		const authorPref = loggedUsers.filter(( logged ) => logged.uid === user.uid );
 		authorPref.map(( author ) => (
@@ -40,48 +51,78 @@ function Feed() {
   //Ordena lista de post según la fecha de publicación:
   sortPostsList( postsList );
 
-    return (
-      <>
-      	<header>
-					{user && 
-						<Link to={ '/profile' }>
-							<Avatar src={ user.photoURL } />
-						</Link>
-					}
+	return (
+		<>
+			<header className='feed__header'>
+				<Link to={ '/profile' }>
+					{infoUser.map((info)=> (
+						<Avatar 
+							src={ info.photo }
+							borderColor={ info.color } 
+							classNameImg='avatar__feed'
+							key={ info.photo }
+						/>
+					))}
+				</Link>
 
-					<div>
-						<img src={ image(`./dev-united-logo.svg`).default } alt='logo' />
-						<img src={ image(`./dev-united-naming.svg`).default } alt='naming' />
-					</div>
-					</header>
+				<Logo 
+					classNameContainer='logo__horizontal'
+					classNameLogo='logo__horizontal-logotype'
+					classNameNaming='logo__horizontal-naming'
+				/>
+			</header>
 
-				<main>
-					<section>
-						<TextInput 
-							handle={ getMessage }
+			<main>
+				<section className='feed__main-section'>
+					{infoUser.map((info)=> (
+						<Avatar 
+							src={ info.photo }
+							classNameImg='avatar__feed-input'
+							key={ info.photo }
+						/>
+					))}
+
+					<div className='feed__main-div'>
+						<textarea 
+							className='feed__main-textarea' 
+							maxLength='200'
+							onChange={ getMessage } 
 							placeholder='What’s happening?'
 							value={ message }
+						>
+						</textarea>
+
+						<div className='feed__main-counter'>
+							<div style={{ width: `${ message.length/2 }%`}} className='feed__main-progressBar'></div>
+							<p className='feed__main-count'>
+								<span>{ message.length }</span>
+								<span>200 max.</span>
+							</p>
+						</div>
+
+						<Button 
+							classNameBtn={ 'button_post' }
+							cta={ cta.post } 
+							handle={ addPost } 
 						/>
+						</div>
+				</section>
 
-						<p>CARACTERES UTILIZADOS / 200 max.</p>
-						<Button cta={ cta.post } handle={ addPost } />
-					</section>
-
-					<section>
-						{postsList.map(( post )=> (
-							<PostContent 
-								authorUid={ post.authorUid }
-								key={ post.id } 
-								message={ post.message } 
-								nickname={ post.authorNickname }
-								photo={ post.authorPhoto}
-								postId={ post.id }
-							/>
-						))}
-					</section>
-				</main>
-      </>
-    );
-  }
+				<section>
+					{postsList.map(( post )=> (
+						<PostContent 
+							authorUid={ post.authorUid }
+							key={ post.id } 
+							message={ post.message } 
+							nickname={ post.authorNickname }
+							photo={ post.authorPhoto}
+							postId={ post.id }
+						/>
+					))}
+				</section>
+			</main>
+		</>
+	);
+}
   
-  export default Feed;
+export default Feed;
