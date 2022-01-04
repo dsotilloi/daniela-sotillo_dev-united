@@ -1,26 +1,33 @@
-import React, { useContext } from "react";
-import { AppContext } from '../../hooks/context/AppContext';
+import React from 'react';
 import { cta } from '../../helpers/button-cta'
-import Button from "./Button";
+import { loginConGoogle } from "../../firebase/firebase";
 
+import ButtonImg from './ButtonImg';
+
+import '../../styles/signIn.css';
 
 function SignIn() {
 
-	const { loginConGoogle } = useContext(AppContext);   
-	const image = require.context('../../assets/images', true);
+	const image = require.context( '../../assets/images', true );
 
 	return (
 		<section>
-			<h1 className="main__h1">LOREM IPSUM DOLOR</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+			<h1 className='signIn__h1'>
+				LOREM 
+				<br></br> 
+				IPSUM DOLOR
+			</h1>
 
-			<div>
-				<img src={ image(`./google-icon.svg`).default } alt='google icon' />
-				<Button 
-				cta={ cta.signIn } 
-				handle={loginConGoogle} /> 
-			</div>
+			<p className='signIn__p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
 			
+			<ButtonImg 
+				alt='google logo'
+				classNameBtn='google-button'
+				classNameImg='google-img'
+				cta={ cta.signIn }
+				handle={ loginConGoogle } 
+				img={ image( './google-icon.svg' ).default }
+			/> 
 		</section>      
 	)
 };

@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../hooks/context/AppContext";
 import firebase, { firestore } from "../../firebase/firebase";
 
-
 import Avatar from "../presentational/Avatar";
+
+import '../../styles/postContent.css';
 
 
 function PostContent({ 
@@ -64,6 +65,7 @@ function PostContent({
       <Link to={ url }>
         <Avatar src={ photo } />
       </Link>
+
       <p>{ nickname }</p>
       <p>{ post.localeDate }</p>
 

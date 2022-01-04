@@ -1,34 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import { AppContext } from '../../hooks/context/AppContext';
-import UserWelcome from "../containers/UserWelcome";
-import SignIn from "./SignIn";
 
+import Logo from './Logo';
+import SignIn from './SignIn';
+import UserWelcome from "../containers/UserWelcome";
+
+import '../../styles/userRegister.css'
 
 function UserRegister() {
 
-  const image = require.context( '../../assets/images', true );
   const { user } = useContext( AppContext );
 
   return (
-    <>
+    <div className="user-register">
       <header>
-        <div>
-          <img src={ image(`./dev-united-logo.svg`).default } alt='logo' />
-          <img src={ image(`./dev-united-naming.svg`).default } alt='naming' />
-        </div>
+        <Logo 
+          classNameContainer='logo__vert'
+          classNameLogo='logo__vert-logotype'
+          classNameNaming='logo__vert-naming'
+        />
       </header>
 
       <main>
-
         {user ? (
           <UserWelcome />
         ):(
           <SignIn />
         )}
-
       </main>
-
-    </>
+    </div>
   );
 }
 
