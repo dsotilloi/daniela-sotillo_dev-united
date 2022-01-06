@@ -5,9 +5,15 @@
 }
   
 @font-face {
-  font-family: slkscr;
+  font-family: slkscrb;
   src: url('./assets/fonts/slkscrb.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: slkscr;
+  src: url('./assets/fonts/slkscr.ttf') format('truetype');
+}
+
 
 html {
   background-color: #2E132C;
