@@ -10,6 +10,7 @@ import '../../styles/postContent.css';
 
 function PostContent({ 
   authorUid,
+  color,
   message, 
   nickname, 
   photo,
@@ -18,9 +19,6 @@ function PostContent({
 
   const { postsList, user } = useContext(AppContext);
   const image = require.context( '../../assets/images', true );
-
-  //Setea el enlace del avatar del post:
-  const url = authorUid === user.uid ? '/profile' : `/profile/${ authorUid }`;
 
   //Filtra la lista de posts según el postId al cual el usuario de click: 
   const filteredList = postsList.filter(( post ) => post.id === postId );
@@ -61,42 +59,53 @@ function PostContent({
 	}; 
 
   return (
-    <div>
-      <Link to={ url }>
-        <Avatar src={ photo } />
+    <section className='post-content'>
+      <Link to={ authorUid === user.uid ? '/profile' : `/profile/${ authorUid }` }>
+        <Avatar classNameImg='avatar__post' src={ photo } />
       </Link>
 
-      <p>{ nickname }</p>
-      <p>{ post.localeDate }</p>
+      <div className='post-content__container'>
 
-      {user.uid === authorUid ? (
-        <img src={ 
-          image(`./delete-icon.svg`).default } 
-          alt="delete icon" 
-          onClick={ () => deletePost( postId )} 
-        />
-      ):(
-        null
-      )}
+        <section className='post-content__header'>
 
-      <p>{ message }</p>
+          <div className='post-content__author'>
+            <p style={{background: `${ color }`}}> { nickname } </p>
+            <p> - { post.localeDate }</p>
+          </div>
 
-      {post.like ? (
-        <img 
-          src={ image(`./like-on.svg`).default } 
-          alt="like icon" 
-          onClick={() => unlikePost( postId )} 
-        />
-        ):( 
-        <img 
-          src={ image(`./like-off.svg`).default } 
-          alt="dislike icon" 
-          onClick={() => likePost( postId )} 
-        />
-      )}
+          {user.uid === authorUid ? (
+            <img 
+              src={image( './delete-icon.svg' ).default} 
+              alt="delete icon" 
+              onClick={() => deletePost( postId )} 
+            />
+          ):(
+            null
+          )}
+        </section>
 
-      <p>{ post.countLikes }</p>
-    </div>
+        <p className='post-content__message'>{ message }</p>
+
+        <section className='post-content__likes'>
+          {post.like ? (
+            <img 
+              src={ image(`./like-on.svg`).default } 
+              alt="like icon" 
+              onClick={() => unlikePost( postId )} 
+            />
+            ):( 
+            <img 
+              src={ image(`./like-off.svg`).default } 
+              alt="dislike icon" 
+              onClick={() => likePost( postId )} 
+            />
+          )}
+
+          <p className={ post.like ? 'like' : 'unlike'}>{ post.countLikes }</p>
+        </section>
+
+      </div>
+    </section>
   );
 }
   

@@ -11,9 +11,10 @@ function Avatar({
 	return (
 			<img 
 				alt='avatar' 
-				className={`avatar ${ borderColor } ${ classNameImg }`}
+				className={`avatar ${ classNameImg }`}
 				onClick={ handle } 
 				src={ src } 
+				style={{bordercolor: `${ borderColor }`}}
 			/>
 	);
 }

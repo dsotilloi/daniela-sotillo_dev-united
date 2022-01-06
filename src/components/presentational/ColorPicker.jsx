@@ -6,7 +6,7 @@ function ColorPicker({ color, handle }) {
   return (
     <li 
     className='color-picker'
-    onClick={() => handle( color.name )}
+    onClick={() => handle( color.hex )}
     style={{ backgroundColor: color.hex }} >
     </li>
   );

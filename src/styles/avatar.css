@@ -6,7 +6,7 @@
 }
 
 .avatar__feed {
-	border: 3px solid;
+	border: 0.5rem solid;
 	flex-basis: 50%;
 	width: 60%;
 }
@@ -16,27 +16,7 @@
 	height: 100%;
 }
 
-.red {
-	border-color: #F50D5A;
+.avatar__post {
+	flex-basis: calc(20% - 1rem);
+	width: 80%;
 }
-
-.orange {
-	border-color: #FF865C;
-}
-
-.yellow {
-	border-color: #FFEA5C;
-}
-
-.green {
-	border-color: #00DA76;
-}
-
-.blue {
-	border-color: #0096CE;
-}
-
-.violet {
-	border-color: #800FFF;
-}
-
