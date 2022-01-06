@@ -1,17 +1,18 @@
 /* MOBILE */
 
 .feed__header {
-	justify-content: space-between;
-	padding: 0.5rem 1rem;
-	width: 100%;
   display: flex;
+	justify-content: space-between;
+	padding: 0.5rem 1.5rem;
+	width: 100%;
 }
 
 .feed__main-section {
 	background-color: #150714;
+	border-bottom: 0.3rem solid #60265B;
 	display: flex;
 	justify-content: space-between;
-	padding: 2rem 1rem;
+	padding: 2rem 1.5rem;
 }
 
 .feed__main-div {
