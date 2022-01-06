@@ -4,13 +4,13 @@ import "firebase/auth";
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB_jRlthKb30eUve6IVUq7nHjGeoD_l9_I",
-    authDomain: "daniela-sotillo-dev-united.firebaseapp.com",
-    projectId: "daniela-sotillo-dev-united",
-    storageBucket: "daniela-sotillo-dev-united.appspot.com",
-    messagingSenderId: "301822983438",
-    appId: "1:301822983438:web:bba6e65f5d4cdbcbe4eb5f"
-  };
+  apiKey: "AIzaSyDPeDJsiXpLQ9LbcOAt81GaOxiK8cJaVuo",
+  authDomain: "dev-united-sotillo-daniela.firebaseapp.com",
+  projectId: "dev-united-sotillo-daniela",
+  storageBucket: "dev-united-sotillo-daniela.appspot.com",
+  messagingSenderId: "876257962989",
+  appId: "1:876257962989:web:a2d9d6e88fb8a7a86b55e4"
+};
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
