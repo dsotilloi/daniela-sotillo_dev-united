@@ -64,6 +64,7 @@ function Profile() {
           {filteredList.map(( post )=> (
             <PostContent 
               authorUid={ post.authorUid }
+              color={ post.authorColor }
               key={ post.id } 
               message={ post.message } 
               nickname={ post.authorNickname }

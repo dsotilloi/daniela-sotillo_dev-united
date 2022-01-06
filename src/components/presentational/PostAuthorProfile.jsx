@@ -14,6 +14,7 @@ function PostAuthorProfile() {
 	//Obtiene la informacion la foto y el nickname del autor del post:
 	const infoUser = loggedUsers.filter(( logged ) => logged.uid === authorUid).map(( logged ) => {
 		return {
+		color: logged.color,
 		nickname: logged.nickname,
 		photo: logged.photo
 		}
@@ -24,6 +25,8 @@ function PostAuthorProfile() {
 
 	//Ordena lista de post según la fecha de publicación:
 	sortPostsList( postsList );
+	
+	console.log(infoUser);
 
 	return (
 		<div>
@@ -32,12 +35,14 @@ function PostAuthorProfile() {
           key={ info.nickname }
           nickname={ info.nickname } 
           src={ info.photo } 
+					color={ info.color }
         />
       )}
 
 			{filteredList.map((post)=> (
 				<PostContent 
 					authorUid={ post.authorUid }
+					color={ post.authorColor }
 					key={ post.id } 
 					message={ post.message } 
 					nickname={ post.authorNickname }

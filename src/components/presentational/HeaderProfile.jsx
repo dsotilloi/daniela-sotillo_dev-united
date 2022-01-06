@@ -6,7 +6,12 @@ import Button from './Button';
 import Avatar from './Avatar';
 
 
-function HeaderProfile({ src, cta, nickname }) {
+function HeaderProfile({ 
+	color,
+	cta, 
+	nickname, 
+	src 
+}) {
 
 	const image = require.context( '../../assets/images', true );
 	const navigate = useNavigate();
@@ -20,6 +25,8 @@ function HeaderProfile({ src, cta, nickname }) {
 		navigate('/');
 	};
 
+	console.log(color);
+
   return (
 		<header>
 			<img 
@@ -30,7 +37,7 @@ function HeaderProfile({ src, cta, nickname }) {
 
 			<p>{ nickname }</p>
 			<Button cta={ cta } handle={ userLogout } />
-			<Avatar src={ src } />
+			<Avatar src={ src } borderColor={ color }/>
 			<p>{ nickname }</p>
 		</header>
   );
