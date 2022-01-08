@@ -4,5 +4,6 @@ export const cta = {
     logout: 'logout',
     post: 'post',
     posts: 'posts',
-    favorites: 'favorites'
+    favorites: 'favorites',
+    home: 'return to Home'
 }
