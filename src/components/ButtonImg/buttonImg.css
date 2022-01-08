@@ -1,0 +1,53 @@
+/* MOBILE: */
+
+.button-flex {
+	align-items: center;
+	border: none;
+	color: #ffffff;
+	cursor: pointer;
+	display: flex;
+	font-size: 1.8rem;
+	justify-content: space-between;
+}
+
+.button-flex img {
+	display: block;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.button-flex p {
+	text-align: center;
+	width: 100%;
+}
+
+.google-button {
+  background-color: #4285F4;
+	border: 0.2rem solid #4285F4;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	width: 100%;
+}
+
+.google-img {
+	border-radius: 0.5rem 0 0 0.5rem;
+	flex-basis: 20%;
+  background-color: #ffffff;
+}
+
+.display-none {
+	display: none;
+}
+
+.button__logout {
+	background-color: #F50D5A;
+	color: #250C23;
+	display: flex;
+	flex-direction: row-reverse;
+	padding: 0.5rem;
+}
+
+.button__logout p {
+	font-family: slkscrb;
+	margin-right: 0.5rem;
+}

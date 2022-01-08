@@ -1,0 +1,55 @@
+.button {
+	border: none;
+	color: #ffffff;
+	cursor: pointer;
+	font-family: slkscrb;
+	font-size: 1.8rem;
+	padding: 1.5rem;
+}
+
+.button-green {
+	background-color: #00DA76;
+	margin-top: 3rem;
+	width: 100%;
+}
+
+.button_post {
+	background-color: #2F112D;
+	color: #150714;
+	padding: 1rem 2rem;
+}
+
+.button_profile {
+	width: 50%;
+}
+
+.showPosts {
+	background-color: #60265B;
+	color: #150714;
+}
+
+.unshowPosts {
+	background-color: #150714;
+	color: #60265B;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.button {
+		font-size: 2.4rem;
+	}
+
+	.not-found__btn {
+		align-self: center;
+		margin-bottom: 3rem;
+		width: 70%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.not-found__btn {
+		width: 50%;
+	}
+}
+

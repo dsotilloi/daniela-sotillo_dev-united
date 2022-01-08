@@ -1,0 +1,21 @@
+.user-register{
+	margin: 0 auto;
+	width: 85%;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.user-register{
+		width: 80%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.user-register{
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100vh;	
+	}
+}

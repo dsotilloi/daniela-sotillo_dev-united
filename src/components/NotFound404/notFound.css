@@ -1,0 +1,56 @@
+.not-found {
+  width: 90%;
+	margin: 0 auto;
+}
+
+.not-found__main {
+	display: flex;
+	flex-direction: column;
+}
+
+.not-found__main h1{
+	font-family: slkscrb;
+	font-size: 3rem;
+	margin-bottom: 3rem;
+}
+
+.not-found__main h1 span{
+	color: #F50D5A;
+}
+
+.not-found__main p {
+	font-size: 1.6rem;
+	margin-bottom: 9rem;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.not-found {
+		width: 60%;
+	}
+	
+	.not-found__main h1{
+		font-size: 4.8rem;
+		padding: 0 10%;
+	}
+
+	.not-found__main p {
+		font-size: 1.8rem;
+		padding: 0 10%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.not-found {
+		width: 50%;
+	}
+
+	.not-found__main h1{
+		margin-bottom: 5rem;
+	}
+	
+	.not-found__main p {
+		margin-bottom: 9rem;
+	}
+}

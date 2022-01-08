@@ -1,0 +1,28 @@
+.signIn__h1 {
+	font-family: 'slkscrb';
+	font-size: 3.5rem;
+}
+
+.signIn__p {
+	font-size: 1.6rem;
+	margin: 2.5rem 0;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.signIn__h1 {
+		font-size: 4.8rem;
+	}
+
+	.signIn__p {
+		font-size: 1.8rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.signIn {
+		margin: 0 auto;
+		width: 80%;
+	}
+}

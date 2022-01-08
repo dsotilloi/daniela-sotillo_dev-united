@@ -1,0 +1,18 @@
+.footer {
+	color: #60265B;
+	font-size: 1.4rem;
+	padding: 4rem 0 3rem;
+	text-align: center;
+}
+
+.footer span {
+	color: #F50D5A;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.footer {
+		font-size: 1.8rem;
+	}
+}

@@ -1,0 +1,49 @@
+.avatar {
+	border-radius: 50%;
+}
+
+.avatar__feed {
+	flex-basis: 50%;
+	width: 40%;
+}
+
+.avatar__feed-input {
+	flex-basis: calc(20% - 1rem);
+	height: 100%;
+	min-width: 5rem;
+}
+
+.avatar__post {
+	flex-basis: calc(20% - 1rem);
+	width: 80%;
+}
+
+.avatar__profile {
+	width: 30%
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.avatar__feed {
+		width: 55%;
+	}
+
+	.avatar__feed-input {
+		flex-basis: calc(15% - 1rem);
+	}
+
+	.avatar__post {
+		width: 100%;
+	}
+
+	.avatar__profile {
+		width: 20%
+	}
+}
+
+@media (min-width: 1200px) {
+	.avatar__profile {
+		width: 10%
+	}
+}

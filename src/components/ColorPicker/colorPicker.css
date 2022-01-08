@@ -1,0 +1,25 @@
+.color-picker {
+	height: 5rem;
+	list-style: none;
+	width: 5rem;
+}
+
+.white-border {
+	border: 0.5rem solid #ffffff;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.color-picker {
+		height: 7rem;
+		width: 7rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.color-picker {
+		height: 6rem;
+		width: 6rem;
+	}
+}
