@@ -1,0 +1,19 @@
+.profile-filters__btn {
+	border-bottom: 0.3rem solid #60265B;
+	background-color: #150714;
+}
+
+/* RESPONSIVE: */
+
+@media (min-width: 768px) {
+	.profile-filters__btn {
+		padding: 0 7rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.profile-filters__btn {
+		padding: 0 25%;
+	}
+}
+
