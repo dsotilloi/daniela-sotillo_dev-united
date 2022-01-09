@@ -12,7 +12,7 @@ import './userWelcome.css';
 
 const UserWelcome = () => {
 
-	const { user, loggedUsers, postsList } = useContext(AppContext);
+	const { user, postsList } = useContext(AppContext);
 	const [ colorSelected, setColorSelected ] = useState( undefined );
 	const [ colors, setColors ] = useState( colorsList );
 	const [ nickname, setNickname ] = useState('');
@@ -21,20 +21,27 @@ const UserWelcome = () => {
 	//Agrega o actualiza la información del usuario logueado en la colección "Users" de Firestore:
 	const setUser = (e) => {
 		
-		const loggedUser = loggedUsers.find((logged)=> logged.uid === user.uid);
+		// const loggedUser = loggedUsers.find((logged)=> logged.uid === user.uid);
 
-		if( loggedUser ) {
-			firestore.collection( 'users' ).doc( user.uid ).set({
-				nickname: e.target.value
-			}, { merge: true });
-		}else{
-			firestore.collection( 'users' ).doc( user.uid ).set({
-				email: user.email,
-				name: user.displayName,
-				nickname: e.target.value,
-				photo: user.photoURL
-			});
-		}
+		// if( loggedUser ) {
+		// 	firestore.collection( 'users' ).doc( user.uid ).set({
+		// 		nickname: e.target.value
+		// 	}, { merge: true });
+		// }else{
+		// 	firestore.collection( 'users' ).doc( user.uid ).set({
+		// 		email: user.email,
+		// 		name: user.displayName,
+		// 		nickname: e.target.value,
+		// 		photo: user.photoURL
+		// 	});
+		// }
+
+		firestore.collection( 'users' ).doc( user.uid ).set({
+			email: user.email,
+			name: user.displayName,
+			nickname: e.target.value,
+			photo: user.photoURL
+		});
 
 		setNickname( e.target.value );
 	};
