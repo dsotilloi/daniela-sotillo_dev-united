@@ -37,6 +37,7 @@ function AppProvider({ children }) {
 				const post = snapshot.docs.map(( doc ) => {
 					return {
 						authorColor: doc.data().authorColor,
+						authorEmail: doc.data().authorEmail,
 						authorNickname: doc.data().authorNickname,
 						authorPhoto: doc.data().authorPhoto,
 						authorUid: doc.data().authorUid,

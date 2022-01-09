@@ -33,11 +33,12 @@ function Feed() {
 
 	//Agrega el post del usuario a Firebase con un ID random:
 	const addPost = () => {
-		const authorPref = loggedUsers.filter(( logged ) => logged.uid === user.uid );
+		const authorPost = loggedUsers.filter(( logged ) => logged.uid === user.uid );
 
-		authorPref.map(( author ) => (
+		authorPost.map(( author ) => (
 			firestore.collection( 'posts' ).add({
 				authorColor: author.color,
+				authorEmail: author.email,
 				authorNickname: author.nickname,
 				authorPhoto: author.photo,
 				authorUid: author.uid,
@@ -127,6 +128,7 @@ function Feed() {
 							nickname={ post.authorNickname }
 							photo={ post.authorPhoto}
 							postId={ post.id }
+							email={ post.authorEmail }
 						/>
 					))
 				)}

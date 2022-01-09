@@ -10,6 +10,7 @@ import './postContent.css';
 function PostContent({ 
   authorUid,
   color,
+  email,
   message, 
   nickname, 
   photo,
@@ -83,6 +84,8 @@ function PostContent({
               null
             )}
           </section>
+
+          <p className='post-content__email'>with the e-Mail: { email }</p>
 
           <p className='post-content__message'>{ message }</p>
 
