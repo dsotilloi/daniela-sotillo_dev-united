@@ -59,7 +59,7 @@ function PostContent({
 
   return (
     <section className='post-container'>
-      <div className='post-content'>
+      <div className='post-content animate__animated animate__bounceIn'>
         <Link to={ authorUid === user.uid ? '/profile' : `/profile/${ authorUid }` }>
           <Avatar classNameImg='avatar__post' src={ photo } />
         </Link>
