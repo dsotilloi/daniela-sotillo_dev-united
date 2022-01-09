@@ -5,13 +5,14 @@ import { sortPostsList } from '../../helpers/sortPostsList';
 
 import Button from '../Button/Button';
 import HeaderProfile from '../HeaderProfile/HeaderProfile';
+import Loading from '../Loading/Loading';
 import PostContent from '../PostContent/PostContent';
 
 import './myProfile.css';
 
 function MyProfile() {
 
-  const { user, postsList, loggedUsers } = useContext( AppContext );
+  const { isLoading, loggedUsers, postsList, user } = useContext( AppContext );
 	const [ showFavPosts, setShowFavPosts ] = useState( false );
   const [ showUserPosts, setShowUserPosts ] = useState( true );
 
@@ -78,7 +79,10 @@ function MyProfile() {
 					/>
         </section>
 
-          {filteredList.map(( post )=> (
+        {isLoading ? (
+          <Loading />
+        ):(
+          filteredList.map(( post )=> (
             <PostContent 
               authorUid={ post.authorUid }
               color={ post.authorColor }
@@ -88,7 +92,8 @@ function MyProfile() {
               photo={ post.authorPhoto}
               postId={ post.id }
             />
-          ))}
+          ))
+        )}
       </main>
     </>
   );

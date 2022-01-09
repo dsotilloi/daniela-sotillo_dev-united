@@ -7,6 +7,7 @@ import { sortPostsList } from '../../helpers/sortPostsList';
 
 import Avatar from '../Avatar/Avatar';
 import Button from '../Button/Button';
+import Loading from '../Loading/Loading';
 import Logo from '../Logo/Logo';
 import PostContent from '../PostContent/PostContent';
 
@@ -14,7 +15,7 @@ import './feed.css'
 
 function Feed() {
 
-	const { user, postsList, loggedUsers } = useContext( AppContext );
+	const { user, postsList, loggedUsers, isLoading } = useContext( AppContext );
 	const [ message, setMessage ] = useState("");
 
   //Obtiene el color y la foto del usuario logueado:
@@ -45,6 +46,7 @@ function Feed() {
 			})
 		));
 		setMessage('');
+		// setIsLoading(false);
 	};
 	
   //Ordena lista de post según la fecha de publicación:
@@ -56,10 +58,10 @@ function Feed() {
 				<Link to={ '/profile' }>
 					{infoUser.map(( info )=> (
 						<Avatar 
-							src={ info.photo }
 							borderColor={ info.color } 
 							classNameImg='avatar__feed'
 							key={ info.photo }
+							src={ info.photo }
 						/>
 					))}
 				</Link>
@@ -92,7 +94,12 @@ function Feed() {
 						</textarea>
 
 						<div className='feed__main-counter'>
-							<div style={{ width: `${ message.length/2 }%` }} className='feed__main-progressBar'></div>
+							<div 
+								className='feed__main-progressBar'
+								style={{ width: `${ message.length/2 }%` }} 
+							>
+							</div>
+							
 							<p className='feed__main-count'>
 								<span>{ message.length }</span>
 								<span>200 max.</span>
@@ -104,20 +111,24 @@ function Feed() {
 							cta={ cta.post } 
 							handle={ addPost } 
 						/>
-						</div>
+					</div>
 				</section>
 
-				{postsList.map(( post )=> (
-					<PostContent 
-						authorUid={ post.authorUid }
-						color={ post.authorColor }
-						key={ post.id } 
-						message={ post.message } 
-						nickname={ post.authorNickname }
-						photo={ post.authorPhoto}
-						postId={ post.id }
-					/>
-				))}
+				{ isLoading ? (
+					<Loading />
+				):(
+					postsList.map(( post )=> (
+						<PostContent 
+							authorUid={ post.authorUid }
+							color={ post.authorColor }
+							key={ post.id } 
+							message={ post.message } 
+							nickname={ post.authorNickname }
+							photo={ post.authorPhoto}
+							postId={ post.id }
+						/>
+					))
+				)}
 			</main>
 		</>
 	);
