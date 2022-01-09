@@ -46,7 +46,6 @@ function Feed() {
 			})
 		));
 		setMessage('');
-		// setIsLoading(false);
 	};
 	
   //Ordena lista de post según la fecha de publicación:
