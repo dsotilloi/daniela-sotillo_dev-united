@@ -18,43 +18,11 @@ const UserWelcome = () => {
 	const [ nickname, setNickname ] = useState('');
 	const navigate = useNavigate();
 	
-	//Agrega o actualiza la información del usuario logueado en la colección "Users" de Firestore:
-	const setUser = (e) => {
-		
-		// const loggedUser = loggedUsers.find((logged)=> logged.uid === user.uid);
-
-		// if( loggedUser ) {
-		// 	firestore.collection( 'users' ).doc( user.uid ).set({
-		// 		nickname: e.target.value
-		// 	}, { merge: true });
-		// }else{
-		// 	firestore.collection( 'users' ).doc( user.uid ).set({
-		// 		email: user.email,
-		// 		name: user.displayName,
-		// 		nickname: e.target.value,
-		// 		photo: user.photoURL
-		// 	});
-		// }
-
-		firestore.collection( 'users' ).doc( user.uid ).set({
-			email: user.email,
-			name: user.displayName,
-			nickname: e.target.value,
-			photo: user.photoURL
-		});
-
-		setNickname( e.target.value );
-	};
-
-	//Agrega el color seleccionado por el usuario en la colección "Users" de Firestore y actualiza la lista "colors" con esa información:
+	//Captura el color seleccionado por el usuario (a través del id) para devolver la lista de colores actualizada y setear el estado "colorSelected":
 	const setColor = ( e, color ) => {
-		firestore.collection( 'users' ).doc( user.uid ).set({
-			color: color.hex
-		}, { merge: true });
-
 		const colorId = e.target.id;
 
-		let newColorsList = colors.map((color)=> {
+		let newColorsList = colors.map(( color )=> {
 			if(colorId === color.hex) {
 				return {
 					name: color.name, 
@@ -74,10 +42,17 @@ const UserWelcome = () => {
 		setColorSelected( color );
 	};
 
-	//Actualiza la información del usuario en la lista de los posts que haya hecho en 
-	//sesiones anteriores y lo deriva a "/feed":
+	//Actualiza la información del usuario en Firebase (colección "users" y "posts") y lo deriva a "/feed":
 	const goFeed = (e) => {
 		e.preventDefault();
+
+		firestore.collection( 'users' ).doc( user.uid ).set({
+			color: colorSelected.hex,
+			email: user.email,
+			name: user.displayName,
+			nickname: nickname,
+			photo: user.photoURL
+		});
 
 		const userPosts = postsList.filter(( post ) => post.authorUid === user.uid);
 
@@ -108,7 +83,7 @@ const UserWelcome = () => {
 	
 					<input 
 						className='userWelcome__input'
-						onChange={ setUser } 
+						onChange={ (e) => setNickname( e.target.value ) } 
 						placeholder='Type your nickname'
 						type='text'
 						value={ nickname }
