@@ -5,10 +5,10 @@ export const AppContext = createContext();
 
 function AppProvider({ children }) {
 
+	const [ isLoading, setIsLoading ] = useState( true );
 	const [ loggedUsers, setLoggetUsers ] = useState( [] );
 	const [ postsList, setPostsList ] = useState( [] );
 	const [ user, setUser ] = useState( null );
-	const [ isLoading, setIsLoading ] = useState( true );
 	
 	useEffect(() => {
 
@@ -50,7 +50,7 @@ function AppProvider({ children }) {
 			});
 
 			setIsLoading( false );
-
+			
 			return () => {
 				unsubscribeUser();
 				unsubscribePosts();
@@ -65,9 +65,6 @@ function AppProvider({ children }) {
 		
 	}, [ user ]);
 	
-
-	// console.log(isLoading);
-
 	return (
 		<AppContext.Provider
 			value={{ 
