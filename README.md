@@ -59,3 +59,4 @@ Este proyecto fue elaborado como una entrega final del *Programa Intensivo Desar
 
 - A Ariel Peña, desarrollador y profesor en el *Programa Intensivo Desarrollo Web Front-End* de Acámica (https://github.com/ArielPenna).
 - A todo el equipo que paticipó en el curso, por el trabajo colaborativo y su disposición a ayudar.
+- A Globant, la empresa auspiciadora del *Programa Intensivo Desarrollo Web Front-End*.
