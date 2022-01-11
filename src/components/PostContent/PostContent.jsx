@@ -19,6 +19,10 @@ function PostContent({
 
   const { postsList, user } = useContext(AppContext);
   const image = require.context( '../../assets/images', true );
+  const dateOptions = {
+    day: "numeric",
+    month: "short"
+  };
 
   //Filtra la lista de posts según el postId al cual el usuario de click: 
   const filteredList = postsList.filter(( post ) => post.id === postId );
@@ -33,7 +37,7 @@ function PostContent({
   const post = {
     countLikes: filteredList.map(( post ) => post.likes.length),
     like: userLikes.includes( user.uid ),
-    localeDate: new Date( ...postTimestamp ).toLocaleDateString()
+    localeDate: new Date( ...postTimestamp ).toLocaleDateString("es-CH", dateOptions)
   };
 
   //Elimina el post de Firebase:
@@ -70,7 +74,7 @@ function PostContent({
           <section className='post-content__header'>
             <div className='post-content__author'>
               <p style={{background: `${ color }`}}> { nickname } </p>
-              <p> - { post.localeDate }</p>
+              <p> - { post.localeDate }.</p>
             </div>
 
             {user.uid === authorUid ? (
