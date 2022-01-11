@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Dev-United App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Es una aplicación web que simula una red social, estilo Twitter, pero orientada a programadores. El front-end está construido con React y el back-end fue desarrollado con Firebase. Se utilizó Git para el control de versiones.
 
-## Available Scripts
+## Comenzando 🚀
 
-In the project directory, you can run:
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento, en tu máquina local, para propósitos de desarrollo.
 
-### `npm start`
+### Pre-requisitos 📋
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Tener familiaridad en el uso de HTML, CSS y Javascript.
+- Tener Node.js instalado en tu computadora. Se recomienda utilizar la versión de soporte a largo plazo: LTS, por sus siglas en inglés (https://nodejs.org/es/).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Obtén el repositorio ⬇
 
-### `npm test`
+Puedes descargar el ZIP o clonar el repositorio usando Git. Después, ábrelo con tu IDE favorito.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Configura el entorno 💻
 
-### `npm run build`
+Escribe los siguientes comandos en la terminal:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### `npm install`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Instala o reinstala los módulos de Node.js.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### `npm start`
 
-### `npm run eject`
+Ejecuta la aplicación en modo de desarrollo.
+</br>
+Abre http: // localhost: 3000 para ver la app en el navegador.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Aprende más
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Cómo comenzar un proyecto en React: https://es.reactjs.org/tutorial/tutorial.html
+</br>
+Documentación de React: https://es.reactjs.org/docs/getting-started.html
+</br>
+Documentación de Git: https://git-scm.com/docs
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Organización del código ✅
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+El directorio "src" aloja todos los componentes desarrollados para la aplicación, junto con los recursos necesarios para su buen funcionamiento:
 
-## Learn More
+- **Assets:** contiene las imágenes y las fuentes.
+- **Components:** contiene la carpeta de cada componente por separado. Esta, a su vez, tiene en su interior el archivo .js y la hoja de estilo que corresponde al componente en cuestión.
+- **Context:** posee el contexto que envuelve a la aplicación completa. Este, captura y traspasa la información del usuario logueado y sus publicaciones, a todos los componentes de la aplicación.
+- **Firebase:** contiene un archivo .js, el cual, integra la base de datos de Firebase con la aplicación e importa todas las funcionalidades necesarias para ejecutarla.
+- **Helpers:** tiene dentro archivos .js con funciones y listas que ayudan a realizar tareas específicas dentro de los componentes.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A fin de facilitar el entendimiento del código, dentro de los archivos encontrarás comentarios explicativos relacionados con el objetivo de las principales funcionalidades del proyecto.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Autora 🙋‍♀️
 
-### Code Splitting
+- **Daniela Sotillo:** desarrollo de software y documentación (https://github.com/dsotilloi).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Este proyecto fue elaborado como una entrega final del *Programa Intensivo Desarrollo Web Front-End* de Acámica, quienes realizaron y entregaron la ideación y el diseño creativo de la aplicación.
 
-### Analyzing the Bundle Size
+### Agradecimientos 🤝
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- A Ariel Peña, desarrollador y profesor en el *Programa Intensivo Desarrollo Web Front-End* de Acámica (https://github.com/ArielPenna).
+- A todo el equipo que paticipó en el curso, por el trabajo colaborativo y su disposición a ayudar.
+- A Globant, la empresa auspiciadora del *Programa Intensivo Desarrollo Web Front-End*.
